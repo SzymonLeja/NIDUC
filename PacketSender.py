@@ -7,19 +7,21 @@ class PacketSender:
     def __init__(self, packet):
         self.packetValue = packet.value
 
-    def set_packet(self,packet):
+    def set_packet(self, packet):
         self.packetValue = packet
 
-    def send_packet(self):
-        self.noise_generator()
+    def send_packet(self, p):
+        self.noise_generator(p)
 
-    def noise_generator(self):
-        randomNumber = int(random.random() * 10)
-        if randomNumber % 99 != 0:
-            if self.packetValue[0:len(self.packetValue) - 1].count("1") % 2 == 0 and (
-            self.packetValue[0:len(self.packetValue) - 1].count("1")) != 0:
-                self.packetValue = self.packetValue[:-1] + "1"
-            else:
-                self.packetValue = self.packetValue[:-1] + "0"
-
-
+    def noise_generator(self,p):
+        listValue = list(self.packetValue)
+        for packetIndex in range(0, len(listValue) - 1):
+            packetBit = listValue[packetIndex]
+            randomNumber = int(random.random() * 1000)
+            if(p>0):
+                if randomNumber % p == 0:
+                    if packetBit == "0":
+                        listValue[packetIndex] = "1"
+                    else:
+                        listValue[packetIndex] = "0"
+        self.packetValue = "".join(listValue)
