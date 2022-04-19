@@ -1,7 +1,7 @@
 import math
 import random
 import time
-
+import os
 import numpy as numpy
 
 from Packet import Packet
@@ -10,7 +10,10 @@ from PacketSender import PacketSender
 
 result = {}
 numOfTests = 1000
-fileData = open(str(numOfTests) + "data.csv", "w")
+filename = "./dataResult/" + str(numOfTests) + "data.csv"
+os.makedirs(os.path.dirname(filename), exist_ok=True)
+fileData = open(filename, "w")
+
 dataString = ""
 startTime = time.process_time()
 for j in numpy.arange(0.8,0.0,-0.1):
