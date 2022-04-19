@@ -3,13 +3,13 @@ import random
 import time
 import os
 import numpy as numpy
+import operator
 
 from Packet import Packet
 from PacketReceiver import PacketReceiver
 from PacketSender import PacketSender
-
 result = {}
-numOfTests = 1000
+numOfTests = 100000
 filename = "./dataResult/" + str(numOfTests) + "data.csv"
 os.makedirs(os.path.dirname(filename), exist_ok=True)
 fileData = open(filename, "w")
@@ -40,12 +40,14 @@ for j in numpy.arange(0.8,0.0,-0.1):
             result[counter] = result.get(counter, 0) + 1
         else:
             result["broken - not detected"] = result.get("broken - not detected", 0) + 1
-
+    sorted_keys = sorted(list(result.keys()), key = lambda x: (len(str(x)),x))
+    sorted_result = sorted_dict = {k:result[k] for k in sorted_keys}
     dataString += "P= " + str(j)+"\n" +"Liczba powtorzen sygnalu; Liczba wystapien; Udzial procentowy\n"
-    for k, v in result.items():
+    for k, v in sorted_result.items():
         dataString += str(k) + ";" + str(v) + ";" + str(round(float(v / (numOfTests * 1.00) * 100.00), 2))+"%" + "\n"
     dataString+= "\n"
     result = {}
+
 
 elapsed = time.process_time()
 print(elapsed - startTime)
