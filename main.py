@@ -13,7 +13,7 @@ numOfTests = 1000
 fileData = open(str(numOfTests) + "data.csv", "w")
 dataString = ""
 startTime = time.process_time()
-for j in range(0,80,10):
+for j in numpy.arange(0.8,0.0,-0.1):
     for i in range(0, numOfTests):
         innerResult = []
         createdPacket = Packet()
@@ -38,7 +38,7 @@ for j in range(0,80,10):
         else:
             result["broken - not detected"] = result.get("broken - not detected", 0) + 1
 
-    dataString += "P= " + str(j*1.0/100)+"\n" +"Liczba powtorzen sygnalu; Liczba wystapien; Udzial procentowy\n"
+    dataString += "P= " + str(j)+"\n" +"Liczba powtorzen sygnalu; Liczba wystapien; Udzial procentowy\n"
     for k, v in result.items():
         dataString += str(k) + ";" + str(v) + ";" + str(round(float(v / (numOfTests * 1.00) * 100.00), 2))+"%" + "\n"
     dataString+= "\n"
