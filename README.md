@@ -1,3 +1,3 @@
 # NIDUC
 
-Simple ARQ simulator
+Simple ARQ simulator with data file generator
