@@ -9,8 +9,10 @@ from Packet import Packet
 from PacketReceiver import PacketReceiver
 from PacketSender import PacketSender
 result = {}
-numOfTests = 100000
-filename = "./dataResult/" + str(numOfTests) + "data.csv"
+numOfTests = 500
+Packet.packet_length = 1080
+
+filename = "./dataResult/" + str(numOfTests) + "data_"+ str(Packet.packet_length)+ "bit_packet.csv"
 os.makedirs(os.path.dirname(filename), exist_ok=True)
 fileData = open(filename, "w")
 
@@ -51,6 +53,7 @@ for j in numpy.arange(0.8,0.0,-0.1):
 
 elapsed = time.process_time()
 print(elapsed - startTime)
+
 fileData.write(dataString)
 # print("\n-- Packet status at the end --")
 # print("Packet sent: " + str(packetSender.packetValue))

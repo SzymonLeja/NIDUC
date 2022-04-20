@@ -2,7 +2,7 @@ import random
 
 class Packet:
     value = ""
-    packet_length = 128
+    packet_length = 8
 
     def __init__(self):
         self.packet_generator()
