@@ -3,11 +3,14 @@ class PacketReceiver:
     encodedBit = None
     decodedPacket = None
 
-    def receive_packet(self, packet):
+    def receive_packet(self, packet, method):
         self.encodedPacket = packet
-        return self.packet_decoder()
+        if method == "parity":
+            return self.parity_bit_decoder()
+        else:
+            return self.two_from_five_decoder()
 
-    def packet_decoder(self):
+    def parity_bit_decoder(self):
         self.decodedPacket = self.encodedPacket[:-1]
         self.encodedBit = self.encodedPacket[-1]
         if (self.decodedPacket[0:len(self.decodedPacket)].count("1")) % 2 == 0 and \
@@ -18,3 +21,12 @@ class PacketReceiver:
             return True
         else:
             return False
+
+    def two_from_five_decoder(self):
+        for i in range(0, int(len(self.encodedPacket) / 5 - 1), 5):
+            tempValue = self.encodedPacket[i: i+5]
+            if tempValue in ["11000", "10100"]:
+                temp = 0
+            else:
+                return False
+        return True

@@ -13,12 +13,14 @@ class PacketSender:
         self.packetValue = packet
 
     def send_packet(self, p):
-        self.noise_generator(p)
+        if p == 0:
+            self.CEC()
+        else:
+            self.BSC(p)
 
-    def noise_generator(self,p):
+    def BSC(self, p):
         listValue = list(self.packetValue)
         randomNumber = random.random()
-
         if randomNumber < p:
             for packetIndex in range(0, len(listValue) - 1):
                 packetBit = listValue[packetIndex]
@@ -29,3 +31,15 @@ class PacketSender:
                     else:
                         listValue[packetIndex] = "0"
             self.packetValue = "".join(listValue)
+
+    def CEC(self):
+        listValue = list(self.packetValue)
+        cyclicErrorRate = 2
+        for packetIndex in range(0, len(listValue)):
+            packetBit = listValue[packetIndex]
+            if(packetIndex%cyclicErrorRate==0):
+                if packetBit == "0":
+                    listValue[packetIndex] = "1"
+                else:
+                    listValue[packetIndex] = "0"
+        self.packetValue = "".join(listValue)
